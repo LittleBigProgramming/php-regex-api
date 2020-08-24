@@ -6,23 +6,32 @@ class ExpressionTest extends TestCase
     function test_it_finds_a_string()
     {
         $regex = Expression::make()->find('www');
-        $this->assertMatchesRegularExpression($regex, 'www');
+        $this->assertTrue($regex->test('www'));
 
         $regex = Expression::make()->then('www');
-        $this->assertMatchesRegularExpression($regex, 'www');
+        $this->assertTrue($regex->test('www'));
     }
 
     function test_it_checks_for_anything()
     {
         $regex = Expression::make()->anything();
-        $this->assertMatchesRegularExpression($regex, 'foo');
+
+        $this->assertTrue($regex->test('foo'));
     }
 
     function test_it_maybe_has_a_value()
     {
         $regex = Expression::make()->maybe('https');
-        $this->assertMatchesRegularExpression($regex, 'https');
-        $this->assertMatchesRegularExpression($regex, '');
+
+    
+        $this->assertTrue($regex->test('https'));
+        $this->assertTrue($regex->test(''));
+    }
+
+    function test_it_can_chain_method_calls()
+    {
+        $regex = Expression::make()->find('foo')->maybe('bar')->then('baz');
+        $this->assertMatchesRegularExpression($regex, 'foobarbaz');
     }
 }
 
