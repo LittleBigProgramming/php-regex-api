@@ -16,5 +16,15 @@ class Expression
     {
         return $this->find($value);
     }
+
+    public function anything()
+    {
+        return '/' . '.*' . '/';
+    }
+
+    public function maybe($value)
+    {
+        return '/(' . $value  .  ')?/';
+    }
 }
 
