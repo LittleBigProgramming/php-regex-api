@@ -7,7 +7,11 @@ class ExpressionTest extends TestCase
     {
         $regex = Expression::make()->find('www');
 
-        $this-assertRegExp($regex, 'www');
+        $this->assertMatchesRegularExpression($regex, 'www');
+
+        $regex = Expression::make()->then('www');
+
+        $this->assertMatchesRegularExpression($regex, 'www');
     }
 }
 

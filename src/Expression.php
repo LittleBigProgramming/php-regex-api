@@ -11,5 +11,10 @@ class Expression
     {
         return '/' . $value . '/';
     }
+
+    public function then($value)
+    {
+        return $this->find($value);
+    }
 }
 
