@@ -28,6 +28,13 @@ class Expression
         return $this;
     }
 
+    public function anythingBut($value)
+    {
+        $value = $this->sanitize($value);
+
+        return $this->add("(?!$value).*?");
+    }
+
     public function maybe($value)
     {
         $value = $this->sanitize($value);

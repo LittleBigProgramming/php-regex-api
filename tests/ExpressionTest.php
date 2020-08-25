@@ -34,5 +34,16 @@ class ExpressionTest extends TestCase
         $this->assertMatchesRegularExpression($regex, 'foobarbaz');
         $this->assertFalse($regex->test('foostringbaz'));
     }
+
+    function test_it_can_exclude_values()
+    {
+        $regex = Expression::make()
+            ->find('foo')
+            ->anythingBut('bar')
+            ->then('baz');
+
+        $this->assertTrue($regex->test('foobazqux'));
+        $this->assertFalse($regex->test('foobarbaz'));
+    }
 }
 
