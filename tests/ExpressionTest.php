@@ -32,6 +32,7 @@ class ExpressionTest extends TestCase
     {
         $regex = Expression::make()->find('foo')->maybe('bar')->then('baz');
         $this->assertMatchesRegularExpression($regex, 'foobarbaz');
+        $this->assertFalse($regex->test('foostringbaz'));
     }
 }
 

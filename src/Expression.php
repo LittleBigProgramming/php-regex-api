@@ -11,6 +11,7 @@ class Expression
 
     public function find($value)
     {
+        $value = $this->sanitize($value);
         $this->expression .= $value;
 
         return $this;
@@ -18,6 +19,8 @@ class Expression
 
     public function then($value)
     {
+        $value = $this->sanitize($value);
+
         return $this->find($value);
     }
 
@@ -30,6 +33,7 @@ class Expression
 
     public function maybe($value)
     {
+        $value = $this->sanitize($value);
         $this->expression .= '(' . $value  .  ')?';
 
         return $this;
@@ -37,12 +41,22 @@ class Expression
 
     public function test($value)
     {
-        return (bool) preg_match($this->__toString(), $value);
+        return (bool) preg_match($this->getRegex(), $value);
+    }
+
+    public function getRegex()
+    {
+        return '/' . $this->expression . '/';
     }
 
     public function __toString()
     {
-        return '/' . $this->expression . '/';
+        return $this->getRegex();
+    }
+
+    protected function sanitize($value)
+    {
+        return preg_quote($value, '/');
     }
 }
 
